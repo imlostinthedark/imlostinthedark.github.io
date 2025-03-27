@@ -5,8 +5,6 @@ date:   2025-03-27 11:02:10 +0100
 categories: tools
 image: "/assets/images/easyEditor.png"
 ---
-# What is this
-
 As we were developing our games, we came up with  tools to simplify and fasten our work. As we found them really useful, we wanted to share.
 This package contains some tools that we thought could be useful. Right now, this is mostly some attributes to add missing things in the Inspector.
 We plan to add many more soon.
