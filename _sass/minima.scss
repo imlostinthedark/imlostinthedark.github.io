@@ -1,0 +1,74 @@
+@charset "utf-8";
+
+// Define defaults for each variable.
+
+$base-font-family: "MyTerminal";
+$base-font-size:   20px !default;
+$base-font-weight: 400 !default;
+$small-font-size:  $base-font-size * 0.875 !default;
+$base-line-height: 1.5 !default;
+
+$spacing-unit:     30px !default;
+
+$text-color:       #00FF00 !default;
+$background-color: #000 !default;
+$brand-color:      #00FF00 !default;
+
+$grey-color:       #00FF00 !default;
+$grey-color-light: #00FF00 !default;
+$grey-color-dark:  #00FF00 !default;
+
+$table-text-align: left !default;
+
+// Width of the content area
+$content-width:    800px !default;
+
+$on-palm:          600px !default;
+$on-laptop:        800px !default;
+
+
+@font-face {
+  font-family: 'MyTerminal'; /*a name to be used later*/
+  src: url('./fonts/VT323-Regular.ttf'); /*URL to font*/
+}
+
+// Use media queries like this:
+// @include media-query($on-palm) {
+//   .wrapper {
+//     padding-right: $spacing-unit / 2;
+//     padding-left: $spacing-unit / 2;
+//   }
+// }
+@mixin media-query($device) {
+  @media screen and (max-width: $device) {
+    @content;
+  }
+}
+
+@mixin relative-font-size($ratio) {
+  font-size: $base-font-size * $ratio;
+}
+
+// Import partials.
+@import
+  "minima/base",
+  "minima/layout",
+  "minima/syntax-highlighting",
+  "minima/scanlines"
+;
+
+.site-title pre{
+  padding: 1px;
+  line-height: 21px; 
+  border: 1px solid transparent;
+}
+.site-title:hover pre.underline{
+  text-decoration: underline !important;
+}
+pre.underline{
+  padding: 8px;
+  line-height: 2px; 
+}
+.site-title {
+  text-decoration: none !important;
+}
