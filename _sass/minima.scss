@@ -21,7 +21,7 @@ $grey-color-dark:  #00FF00 !default;
 $table-text-align: left !default;
 
 // Width of the content area
-$content-width:    800px !default;
+$content-width:    1200px !default;
 
 $on-palm:          600px !default;
 $on-laptop:        800px !default;
@@ -71,4 +71,36 @@ pre.underline{
 }
 .site-title {
   text-decoration: none !important;
+}
+
+.post-image {
+  max-width: 200px;
+}
+
+.post-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.post-list li{
+  max-width: calc(33% - 60px);
+  margin: auto;
+}
+
+.post-list h3 {
+  text-align: center;
+}
+
+.post-list img {
+  display: block;
+  margin: auto;
+}
+
+.find-more
+{
+  display: block;
+  text-align: center;
+  width: 100%;
 }
