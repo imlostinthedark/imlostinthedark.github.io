@@ -5,6 +5,7 @@ date:   2025-03-27 11:02:10 +0100
 categories: tools
 image: "/assets/images/easyEditor.png"
 ---
+
 As we were developing our games, we came up with  tools to simplify and fasten our work. As we found them really useful, we wanted to share.
 This package contains some tools that we thought could be useful. Right now, this is mostly some attributes to add missing things in the Inspector.
 We plan to add many more soon.
@@ -25,8 +26,9 @@ This attribute takes two parameters :
 [ColoredHeader("SubFields", "#00FF0055")]
 public EditorTesterSubLevel EditorTesterSubLevel;
 ```
-
 ![pic1](/assets/images/pic1.png)
+
+---
 
 ### Subview
 
@@ -44,7 +46,7 @@ This attribute uses one attribute: a string containing a list of the displayed p
      public bool Param3 = false;
  }
 
- public class EditorTester : Updatable
+ public class EditorTester : MonoBehaviour
  {
      public string test;
      [SubField("Param1;Param2")]
@@ -54,6 +56,35 @@ This attribute uses one attribute: a string containing a list of the displayed p
 ```
 
 ![pic2](/assets/images/pic2.png)
+
+- #### Hide in Subview 
+
+When using the previous attribute ([Subview]), you may have some property in the "sub" class that you need to hide from the "parent" class. So you can add an attribute [HideInSubview] that we'll hide this property in any [Subview] attribute. 
+
+For example, if you're still using the EditorTester class and you want to have an EditorTesterSubLevel2 class where you want to be sure that the property Param2 is not shown, you'll use the following code.
+
+```c#
+ public class EditorTesterSubLevel2 : MonoBehaviour
+ {
+    public string Param1;
+    [HideInSubview]
+    public List<string> Param2 = new List<string>();
+    public bool Param3 = false;
+ }
+
+ public class EditorTester : MonoBehaviour
+ {
+     public string test;
+     [SubField("Param1;Param2")]
+     public EditorTesterSubLevel EditorTesterSubLevel;
+     [SubField]
+     public EditorTesterSubLevel2 EditorTesterSubLevel2;
+ }
+
+```
+![pic5](/assets/images/pic5.png)
+
+--- 
 
 ### List Manager
 
@@ -88,6 +119,8 @@ The ListManager attribute has four parameters:
 
 ![pic3](/assets/images/pic3.png)
 
+---
+
 ### Linked dropdown
 
 In some cases, we had a list of elements and we wanted to be able to select one of them for another use. So we put in place a Linked Dropdown attribute to this.
@@ -106,3 +139,76 @@ This attribute has three parameters :
 ```
 
 ![pic4](/assets/images/pic4.png)
+
+---
+
+### Linked dropdown
+
+In some cases, we had a list of elements and we wanted to be able to select one of them for another use. So we put in place a Linked Dropdown attribute to this.
+
+For example, you have a list of sprites as set in the previous attribute, and you want to have a dropdown to select one of this sprite as the main one. So you set a string property and add a LinkedDropdown attribute.
+
+This attribute has three parameters :
+
+- a string defining the property of the source list
+- a string defining the list property used to populate the dropdown. If the source list is a list of strings, this parameter has to be null or empty
+- a string used as a label for the dropdown. If this parameter is omitted, the label use the name of the field.
+
+```c#
+ [LinkedDropdownAttribute("Testers", "Name", "Selected Sprite")]
+ public string DropDown = "";
+```
+
+![pic4](/assets/images/pic4.png)
+
+---
+## Conditional Display
+
+This attribute allow to display a property depending on the value of another property.
+
+For example, if you have a dropdown with two value, you can display another field depending of the value of the dropdown. 
+
+For now, this attribute only have two conditions: equals ("=") and not equal ("!="). We planned to add more condition type soon. 
+
+This attribute has three parameters: 
+- a string defining the name of the condition property
+- a string defining the condition ("=" and "!=" for now)
+- an object defining the value that we want to compare to the property;
+
+```c#
+ public TestEnum TestEnum = TestEnum.Value1;
+
+ [ConditionalDisplay("TestEnum", "=", TestEnum.Value1)]
+ public string ShowWhenValue1 = "";
+ [ConditionalDisplay("TestEnum", "!=", TestEnum.Value1)]
+ public string ShowWhenNotValue1 = "";
+
+```
+
+![ConditionalDisplay1](/assets/images/ConditionalDisplay1.png)
+
+![ConditionalDisplay2](/assets/images/ConditionalDisplay2.png)
+
+---
+---
+## Special Class
+
+### Updatable
+
+As we developed other tools, we came across a problem: we needed a simple way of having a controller that would react in some way when its properties were updated in the inspector. 
+
+To do this, you just have to make your current class extends the Updatable class and implements the OnUpdate method. Updatable inherits from the Monobehaviour class so you can use it just as if it was a Monobehaviour.
+
+``` c#
+ public class EditorTester : Updatable
+ {
+	 public string test;
+	 
+     public override void OnUpdate()
+     {
+         Debug.Log(DateTime.Now.ToString("G") + " UPDATED");
+     }
+ }
+```
+With the previous code, any time you'll update a property of a EditorTester controller, one line will be added in your log.
+
