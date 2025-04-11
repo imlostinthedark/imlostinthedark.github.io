@@ -86,7 +86,7 @@ For example, if you're still using the EditorTester class and you want to have a
 
 --- 
 
-### List Manager
+### Asset List
 
 In some case, you want to have a list of assets with many parameters and you want to be able to select this assets using an asset selector as used everywhere in the Inspector.
 
@@ -111,7 +111,7 @@ The ListManager attribute has four parameters:
 
  public class EditorTester : Updatable
  {
-    [ListManager("Path", typeof(Sprite), "Name", "Sprite")]
+    [AssetList("Path", typeof(Sprite), "Name", "Sprite")]
     public List<SpriteTester> Testers = new List<SpriteTester>();
  }
 
